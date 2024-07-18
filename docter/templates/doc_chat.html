@@ -1,0 +1,143 @@
+{% extends "doc.html" %}
+{% load static%}
+{% block 'content' %}
+<style>
+  .chat1{
+    flex: 25;
+
+  }
+  .chat2{
+    flex: 75;
+  
+  }
+  #backbutton{
+    display: none;
+  }
+  .act{
+    background-color: rgb(255, 255, 255,0.5);
+  }
+  #vedioButton{
+
+  }
+  @media (max-width:578px) {
+    .chat1{
+       flex: 1;
+    } 
+    .chat2{
+       flex: 1;
+       display: 'd-none';
+    }
+    #backbutton{
+       display:inline;
+    }
+    
+  }
+</style>
+  <div class="d-flex m-5  border rounded-3" style="height: 90%;">
+    <div class="d-flex flex-column h-100 align-items-center 
+                bg-transBody  p-0 m-0 border-end  chat1">
+        <div class="border-bottom w-100 d-flex justify-content-center align-items-center " style="height:75px">
+          <h4 class="text-uppercase">{{request.user}}</h4>
+          <script id="userData" type="application/json">
+            { "username": "{{ request.user.username }}"}
+        </script>
+        </div>
+        <div class="overflow-y-auto w-100" style="height: 90%;">
+          <ul class=" w-100 p-0 m-0 ">
+            {% for i in pat%}
+                <li class="w-100 p-0 m-0" data-username="{{ i.patient.user}}" style="list-style: none;"> 
+                   <a href="javascript:void(0)"  
+                   value="{{i.docter_id}}" class="btn bg-transBody w-100  open-chat-btn" 
+                   data-user-id="{{i.id}}">{{i.patient}}
+                   <h6 class="d-inline  float-right {% if i.patient.user.online %} bg-success
+                    {% else %} bg-danger {% endif %}" id="light{{i.docter_id}}"></h6> 
+                  </a> 
+                </li>       
+              
+
+            {% endfor %}
+          </ul>
+           
+        </div>
+        
+    </div>
+    <div class="position-relative d-flex flex-column h-100 p-0 m-0 bg-transBody  chat2">
+      <div class="d-flex justify-content-center align-items-center h-100 chat2default">
+       <p class="d-inline">select the Patient to begine chat</p> <i class="bi bi-chat-dots " style="font-size: 2em; padding-bottom: 15px; margin-left:5px;"></i>
+      </div>
+      <div class="position-relative d-flex d-none flex-column h-100 p-0 m-0  chat2defaultnone">
+          <div class="d-flex align-items-center border-bottom row" style="height:75px; margin-right:1px; margin-left: 1px;">
+            <div class="col-lg-2 col-md-2 col-sm-4  col-4 d-flex align-items-center">
+                  <a href="javascript:void(0)" onclick="closeChat(event)" id="backbutton">
+                      <i class="bi bi-arrow-left-short text-black" style="font-size: 2em;"></i>
+                  </a>  
+                  <div style="height:95%;width:60%; border-radius:50%; background-color: antiquewhite; overflow: hidden;">
+                    <img src=""  alt="img" id="profileimage"  
+                        style="width: 100%; height: 100%; object-fit: cover;" 
+                        onerror="this.src='{% static 'chat/img/unknown.jpg' %}';">
+
+                  </div>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-8 col-8 d-flex justify-content-between">
+              <div style="transform: translate(-9%, 0%);">
+                <h3 class="p-0 m-0" id="profilename" ></h3>
+                <h6 class="p-0 m-0" id="profileonline" ></h6>
+              </div>
+              <div style="transform: translate(0%, 25%);">
+                <i class="bi bi-camera-reels-fill" id="vedioButton"></i>
+              </div>
+            </div>
+            <!-- <div class="col-lg-10 col-md-10 col-sm-8 col-8">
+                <h3 class="p-0 m-0" id="profilename" style="transform: translate(-9%, 0%);"></h3>
+                <h6 class="p-0 m-0" id="profileonline" style="transform: translate(-9%, 0%);"></h6>
+            </div> -->
+
+          </div>
+          <div class="d-flex flex-column" style="height: 90%;">
+            <div class="overflow-y-auto p-3"  id="chat-content" style="height:95% ; scrollbar-width: thin;
+            scrollbar-color: transparent rgba(0, 0, 0, 0.3)">
+            </div>
+            <form class="position-relative"role="search">
+              <input class="form-control" type="search" id="chat-input" placeholder="Search" aria-label="Search">
+              <button class="btn btn-sm btn-success position-absolute w-15"
+              type="submit" style="right:2px;top: 2px;" id="chat-submit">Search</button>
+            </form>
+            
+          </div>
+      </div>    
+    </div>
+     <!-- <script  src="vediochat.js"></script>   -->
+     <script  src="{%static 'Doc\js\vediochat.js' %}"></script>
+   
+  </div>
+
+
+
+{%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
